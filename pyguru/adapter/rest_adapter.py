@@ -2,7 +2,7 @@ from http import HTTPMethod, HTTPStatus
 
 import requests
 
-from pyguru.adapter import ResponseData, ResponseDtype
+from .response_dtype import ResponseData, ResponseDtype
 
 
 class RestAdapter:
@@ -15,7 +15,6 @@ class RestAdapter:
     def is_response_ok(resp: requests.Response) -> bool:
         return (HTTPStatus.OK <= resp.status_code < HTTPStatus.MULTIPLE_CHOICES)
 
-    # TODO return type
     @staticmethod
     def parse_response(resp: requests.Response, response_dtype: ResponseDtype) -> ResponseData:
         match response_dtype:
