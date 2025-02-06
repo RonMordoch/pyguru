@@ -30,6 +30,6 @@ class Credentials:
             and
             (env_password := os.environ.get(self.ENV_VAR_PWD))
         ):
-            env_username, env_password
+            return env_username, env_password
         elif CredentialsFile.CREDENTIALS_FILEPATH.exists():
             return CredentialsFile.load(profile_name=profile_name)

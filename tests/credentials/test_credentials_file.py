@@ -3,9 +3,7 @@ import configparser
 import pytest
 
 from pyguru.credentials.credentials_file import CredentialsFile
-
-TEST_UNAME = 'test_username'
-TEST_PWD = 'test_password'
+from tests.credentials.test_credentials import TEST_PWD, TEST_UNAME
 
 
 @pytest.fixture
