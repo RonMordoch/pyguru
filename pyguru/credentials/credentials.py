@@ -1,6 +1,6 @@
 import os
 
-from .credentials_file_parser import CredentialsFileParser
+from .credentials_file import CredentialsFile
 
 
 class Credentials:
@@ -8,7 +8,7 @@ class Credentials:
     ENV_VAR_UNAME = 'PYGURU_USERNAME'
     ENV_VAR_PWD = 'PYGURU_PASSWORD'
 
-    def __init__(self, username: str = None, password: str = None, profile_name: str = CredentialsFileParser.DEFAULT_PROFILE_NAME) -> None:
+    def __init__(self, username: str = None, password: str = None, profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME) -> None:
         self.username, self.password = self.load_credentials(username, password, profile_name)
 
     def load_credentials(self, username: str = None, password: str = None, profile_name: str = None) -> tuple[str, str]:
@@ -31,5 +31,5 @@ class Credentials:
             (env_password := os.environ.get(self.ENV_VAR_PWD))
         ):
             env_username, env_password
-        elif CredentialsFileParser.CREDENTIALS_FILEPATH.exists():
-            return CredentialsFileParser.parse(profile_name=profile_name)
+        elif CredentialsFile.CREDENTIALS_FILEPATH.exists():
+            return CredentialsFile.load(profile_name=profile_name)
