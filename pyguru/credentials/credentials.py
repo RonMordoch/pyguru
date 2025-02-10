@@ -3,6 +3,10 @@ import os
 from .credentials_file import CredentialsFile
 
 
+class MissingCredentials(Exception):
+    pass
+
+
 class Credentials:
 
     ENV_VAR_UNAME = 'PYGURU_USERNAME'
@@ -10,6 +14,7 @@ class Credentials:
 
     def __init__(self, username: str = None, password: str = None, profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME) -> None:
         self.username, self.password = self.load_credentials(username, password, profile_name)
+        self.profile_name = profile_name
 
     def load_credentials(self, username: str = None, password: str = None, profile_name: str = None) -> tuple[str, str]:
         """
@@ -33,3 +38,5 @@ class Credentials:
             return env_username, env_password
         elif CredentialsFile.CREDENTIALS_FILEPATH.exists():
             return CredentialsFile.load(profile_name=profile_name)
+        else:
+            raise MissingCredentials('Credentials not found!')
