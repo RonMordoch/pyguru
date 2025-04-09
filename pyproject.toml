@@ -1,9 +1,6 @@
 [project]
 name = "pyguru"
-version = "0.0.1"
-authors = [
-  { name="Ron Mordoch", email="mordoch.ron@gmail.com" },
-]
+authors = [{ name = "Ron Mordoch", email = "mordoch.ron@gmail.com" }]
 description = "Python API wrapper for the Labguru REST API "
 readme = "README.md"
 requires-python = ">=3.11"
@@ -13,6 +10,12 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
+
+[tool.setuptools.dynamic]
+version = { attr = "pyguru.__version__" }
+dependencies = { file = ["requirements.txt"] }
+optional-dependencies.dev = { file = ["requirements-dev.txt"] }
 
 [project.urls]
 Homepage = "https://github.com/RonMordoch/pyguru"
