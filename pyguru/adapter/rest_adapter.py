@@ -2,7 +2,8 @@ from http import HTTPMethod, HTTPStatus
 
 import requests
 
-from .response_dtype import ResponseData, ResponseDtype
+from pyguru.request.request import Request
+from pyguru.request.response_dtype import ResponseData, ResponseDtype
 
 
 class RestAdapter:
@@ -28,92 +29,43 @@ class RestAdapter:
     def __init__(self, host: str, version: str) -> None:
         self.api_url = self.get_api_fqdn(host, version)
 
+    def pre_request_hook(self, method: HTTPMethod, request: Request):
+        pass
+
+    def post_request_hook(self, method: HTTPMethod, request: Request):
+        pass
+
     def _request(
         self,
         method: HTTPMethod,
-        endpoint: str,
-        response_dtype: ResponseDtype,
-        headers: dict[str, str] | None = None,
-        params: dict[str, str] | None = None,
-        json: dict[str, str] | None = None,
-        data: dict[str, str] | None = None,
-        files=None,
-        timeout: float | tuple | None = None
+        request: Request
     ) -> tuple[HTTPStatus, ResponseData]:
-        url = f'{self.api_url}/{endpoint}'
+        url = f'{self.api_url}/{request.endpoint}'
+        self.pre_request_hook(method, request)
         resp = requests.request(
             method=method,
             url=url,
-            headers=headers,
-            params=params,
-            data=data,
-            json=json,
-            files=files,
-            timeout=timeout
+            headers=request.headers,
+            params=request.params,
+            data=request.data,
+            json=request.json,
+            files=request.files,
+            timeout=request.timeout
         )
-        resp_data = self.parse_response(resp, response_dtype)
+        self.post_request_hook(method, request)
+        resp_data = self.parse_response(resp, request.response_dtype)
         if self.is_response_ok(resp):
             return HTTPStatus(resp.status_code), resp_data
         raise Exception(resp_data['message'])  # TODO Decide on custom exception or return class
 
-    def get(
-        self,
-        endpoint: str,
-        response_dtype: ResponseDtype = ResponseDtype.JSON,
-        headers: dict[str, str] | None = None,
-        params: dict[str, str] | None = None,
-        timeout: float | tuple | None = None
-    ) -> tuple[HTTPStatus, ResponseData]:
-        return self._request(
-            method=HTTPMethod.GET,
-            endpoint=endpoint,
-            response_dtype=response_dtype,
-            headers=headers,
-            params=params,
-            timeout=timeout
-        )
+    def get(self, request: Request) -> tuple[HTTPStatus, ResponseData]:
+        return self._request(method=HTTPMethod.GET, request=request)
 
-    def post(
-        self,
-        endpoint: str,
-        response_dtype: ResponseDtype = ResponseDtype.JSON,
-        headers: dict[str, str] | None = None,
-        params: dict[str, str] | None = None,
-        json: dict[str, str] | None = None,
-        data: dict[str, str] | None = None,
-        files=None,
-        timeout: float | tuple | None = None
-    ) -> tuple[HTTPStatus, ResponseData]:
-        return self._request(
-            method=HTTPMethod.POST,
-            endpoint=endpoint,
-            response_dtype=response_dtype,
-            headers=headers,
-            params=params,
-            json=json,
-            data=data,
-            files=files,
-            timeout=timeout
-        )
+    def post(self, request: Request) -> tuple[HTTPStatus, ResponseData]:
+        return self._request(method=HTTPMethod.POST, request=request)
 
-    def put(
-        self,
-        endpoint: str,
-        response_dtype: ResponseDtype = ResponseDtype.JSON,
-        headers: dict[str, str] | None = None,
-        params: dict[str, str] | None = None,
-        json: dict[str, str] | None = None,
-        data: dict[str, str] | None = None,
-        files=None,
-        timeout: float | tuple | None = None
-    ) -> tuple[HTTPStatus, ResponseData]:
-        return self._request(
-            method=HTTPMethod.DELETE,
-            endpoint=endpoint,
-            response_dtype=response_dtype,
-            headers=headers,
-            params=params,
-            json=json,
-            data=data,
-            timeout=timeout
-        )
+    def put(self, request: Request) -> tuple[HTTPStatus, ResponseData]:
+        return self._request(method=HTTPMethod.PUT, request=request)
+
+    def delete(self, request: Request) -> tuple[HTTPStatus, ResponseData]:
+        return self._request(method=HTTPMethod.DELETE, request=request)

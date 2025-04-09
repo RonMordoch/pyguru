@@ -1,4 +1,4 @@
-import os
+from pyguru.utils.env import Env
 
 from .credentials_file import CredentialsFile
 
@@ -8,9 +8,6 @@ class MissingCredentials(Exception):
 
 
 class Credentials:
-
-    ENV_VAR_UNAME = 'PYGURU_USERNAME'
-    ENV_VAR_PWD = 'PYGURU_PASSWORD'
 
     def __init__(self, username: str = None, password: str = None, profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME) -> None:
         self.username, self.password = self.load_credentials(username, password, profile_name)
@@ -31,9 +28,9 @@ class Credentials:
         if username and password:
             return username, password
         if (
-            (env_username := os.environ.get(self.ENV_VAR_UNAME))
+            (env_username := Env.PYGURU_USERNAME)
             and
-            (env_password := os.environ.get(self.ENV_VAR_PWD))
+            (env_password := Env.PYGURU_PASSWORD)
         ):
             return env_username, env_password
         elif CredentialsFile.CREDENTIALS_FILEPATH.exists():

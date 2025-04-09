@@ -27,6 +27,8 @@ class TestCredentials:
 
     TEST_UNAME = 'test_username'
     TEST_PWD = 'test_password'
+    ENV_VAR_UNAME = 'PYGURU_USERNAME'
+    ENV_VAR_PWD = 'PYGURU_PASSWORD'
 
     def test_parameter_credentials(self):
         credentials = Credentials(username=TestCredentials.TEST_UNAME, password=TestCredentials.TEST_PWD)
@@ -34,8 +36,8 @@ class TestCredentials:
         assert credentials.password == TestCredentials.TEST_PWD
 
     def test_env_credentials(self, monkeypatch):
-        monkeypatch.setenv(Credentials.ENV_VAR_UNAME, TestCredentials.TEST_UNAME)
-        monkeypatch.setenv(Credentials.ENV_VAR_PWD, TestCredentials.TEST_PWD)
+        monkeypatch.setenv(self.ENV_VAR_UNAME, TestCredentials.TEST_UNAME)
+        monkeypatch.setenv(self.ENV_VAR_PWD, TestCredentials.TEST_PWD)
         # Next fallthrough should be environment variables
         credentials = Credentials(username=None, password=None)
         assert credentials.username == TestCredentials.TEST_UNAME
@@ -45,8 +47,8 @@ class TestCredentials:
         """
         Verify that when no credentials are supplied via arguments or environment variables, the config file is being used.
         """
-        monkeypatch.setenv(Credentials.ENV_VAR_UNAME, '')
-        monkeypatch.setenv(Credentials.ENV_VAR_PWD, '')
+        monkeypatch.setenv(self.ENV_VAR_UNAME, '')
+        monkeypatch.setenv(self.ENV_VAR_PWD, '')
         credentials = Credentials(username=None, password=None)
         assert credentials.username == TestCredentials.TEST_UNAME
         assert credentials.password == TestCredentials.TEST_PWD
