@@ -49,7 +49,6 @@ class BaseLabguruEndpoint:
     ) -> Generator[int, ResponseData]:
         # if page exists in the search parameters, remove it as this iterates over the pages
         params = params or {}
-        params['page'] = 104
         while (resp := self._get(sub_route=sub_route, params=params)):
             # If `meta` is included, the response is divided into `meta` containing paging information,
             # and `data` for the actual result

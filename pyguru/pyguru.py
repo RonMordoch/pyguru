@@ -20,8 +20,9 @@ class PyGuru:
         profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME,
         host=LabguruAdapter.HOST
     ) -> None:
+        self.credentials = Credentials(username, password, profile_name)
         self.adapter = LabguruAdapter(
-            credentials=Credentials(username, password, profile_name),
+            credentials=self.credentials,
             host=host
         )
         # Explicitly register endpoints for better IDE support

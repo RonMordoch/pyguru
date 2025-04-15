@@ -32,16 +32,16 @@ class TestCredentials:
 
     def test_parameter_credentials(self):
         credentials = Credentials(username=TestCredentials.TEST_UNAME, password=TestCredentials.TEST_PWD)
-        assert credentials.username == TestCredentials.TEST_UNAME
-        assert credentials.password == TestCredentials.TEST_PWD
+        assert credentials.data.username == TestCredentials.TEST_UNAME
+        assert credentials.data.password == TestCredentials.TEST_PWD
 
     def test_env_credentials(self, monkeypatch):
         monkeypatch.setenv(self.ENV_VAR_UNAME, TestCredentials.TEST_UNAME)
         monkeypatch.setenv(self.ENV_VAR_PWD, TestCredentials.TEST_PWD)
         # Next fallthrough should be environment variables
         credentials = Credentials(username=None, password=None)
-        assert credentials.username == TestCredentials.TEST_UNAME
-        assert credentials.password == TestCredentials.TEST_PWD
+        assert credentials.data.username == TestCredentials.TEST_UNAME
+        assert credentials.data.password == TestCredentials.TEST_PWD
 
     def test_env_config_file(self, monkeypatch, mock_credentials_file):
         """
@@ -50,5 +50,5 @@ class TestCredentials:
         monkeypatch.setenv(self.ENV_VAR_UNAME, '')
         monkeypatch.setenv(self.ENV_VAR_PWD, '')
         credentials = Credentials(username=None, password=None)
-        assert credentials.username == TestCredentials.TEST_UNAME
-        assert credentials.password == TestCredentials.TEST_PWD
+        assert credentials.data.username == TestCredentials.TEST_UNAME
+        assert credentials.data.password == TestCredentials.TEST_PWD

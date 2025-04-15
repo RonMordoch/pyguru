@@ -25,9 +25,17 @@ class LabguruAdapter(RestAdapter):
         self.token = self.get_token()
 
     def get_token(self, force: bool = False):
+        """
+        Returns an API token by the following order:
+        1. Existing, previously-defined token in the class.
+        2. Token defined in an environment variable.
+        3. Newly fetched token from the API endpoint.
+        """
         if self.token and not force:
             return self.token
-        return SessionsEndpoint(self).get_token(self.credentials.username, self.credentials.password)
+        elif self.credentials.token:
+            return self.credentials.token
+        return SessionsEndpoint(self).get_token(self.credentials.data.username, self.credentials.data.password)
 
     def pre_request_hook(self, method: HTTPMethod, request: Request):
         """
