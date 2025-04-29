@@ -1,4 +1,5 @@
 from .antibodies import AntibodiesEndpoint
+from .attachments import AttachmentsEndpoint
 from .bacteria import BacteriaEndpoint
 from .biocollections import BiocollectionsEndpoint
 from .boxes import BoxesEndpoint

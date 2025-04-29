@@ -27,6 +27,7 @@ class PyGuru:
         )
         # Explicitly register endpoints for better IDE support
         self.antibodies = endpoints.AntibodiesEndpoint(self.adapter)
+        self.attachments = endpoints.AttachmentsEndpoint(self.adapter)
         self.bacteria = endpoints.BacteriaEndpoint(self.adapter)
         self.boxes = endpoints.BoxesEndpoint(self.adapter)
         self.cell_lines = endpoints.CellLinesEndpoint(self.adapter)

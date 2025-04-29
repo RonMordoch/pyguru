@@ -58,10 +58,18 @@ class BaseLabguruEndpoint:
             yield params['page'], resp
             params['page'] += 1
 
-    def post(self, json_data: dict | None = None, sub_route: str | None = None):
+    def post(
+        self,
+        sub_route: str | None = None,
+        json_data: dict | None = None,
+        data: dict[str, str] | None = None,
+        files: list[str] | None = None
+    ):
         request = Request(
             endpoint=self._get_full_endpoint(sub_route=sub_route),
-            json=json_data
+            json=json_data,
+            data=data,
+            files=files
         )
         _, resp_data = self.adapter.post(request)
         return resp_data

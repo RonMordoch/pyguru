@@ -51,3 +51,9 @@ class LabguruAdapter(RestAdapter):
                     **(request.json or {}),
                     'token': self.get_token(),
                 }
+                # Add token to `data` only if it exists
+                if request.data:
+                    request.data = {
+                        **request.data,
+                        'token': self.get_token(),
+                    }
