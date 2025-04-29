@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Generator
 
 from pyguru.request.request import Request
+from pyguru.request.response_dtype import ResponseDtype
 
 if TYPE_CHECKING:
     from pyguru.adapter import LabguruAdapter
@@ -31,10 +32,12 @@ class BaseLabguruEndpoint:
         self,
         sub_route: str | None = None,
         params: dict[str, str] | None = None,
+        response_dtype: ResponseDtype = ResponseDtype.JSON
     ):
         request = Request(
             endpoint=self._get_full_endpoint(sub_route=sub_route),
-            params=params
+            params=params,
+            response_dtype=response_dtype
         )
         _, resp_data = self.adapter.get(request)
         return resp_data
