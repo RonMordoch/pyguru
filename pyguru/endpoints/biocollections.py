@@ -11,7 +11,7 @@ class BiocollectionsEndpoint(BaseLabguruEndpoint):
         super().__init__(adapter, f'biocollections/{biocollection}')
 
     def get_derived_collections(self):
-        return self._get(sub_route='get_derived_collections')
+        return self.get(sub_route='get_derived_collections')
 
     def get_derived_items(
         self,
@@ -24,4 +24,4 @@ class BiocollectionsEndpoint(BaseLabguruEndpoint):
         }
         if derived_collection_id is not None:
             params['derived_collection_id'] = derived_collection_id
-        return self._get(sub_route=f'{item_id}/get_derived_items', params=params)
+        return self.get(sub_route=f'{item_id}/get_derived_items', params=params)

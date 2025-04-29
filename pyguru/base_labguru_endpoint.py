@@ -27,20 +27,17 @@ class BaseLabguruEndpoint:
         _, resp_data = self.adapter.get(request)
         return resp_data
 
-    def _get(self, sub_route: str | None = None, params: dict[str, str] | None = None):
+    def get(
+        self,
+        sub_route: str | None = None,
+        params: dict[str, str] | None = None,
+    ):
         request = Request(
             endpoint=self._get_full_endpoint(sub_route=sub_route),
             params=params
         )
         _, resp_data = self.adapter.get(request)
         return resp_data
-
-    def get(
-        self,
-        sub_route: str | None = None,
-        params: dict[str, str] | None = None,
-    ):
-        return self._get(sub_route=sub_route, params=params)
 
     def paginate(
         self,
@@ -49,7 +46,7 @@ class BaseLabguruEndpoint:
     ) -> Generator[int, ResponseData]:
         # if page exists in the search parameters, remove it as this iterates over the pages
         params = params or {}
-        while (resp := self._get(sub_route=sub_route, params=params)):
+        while (resp := self.get(sub_route=sub_route, params=params)):
             # If `meta` is included, the response is divided into `meta` containing paging information,
             # and `data` for the actual result
             # otherwise, if `meta` is False (as it is by default), the response consists only of the data

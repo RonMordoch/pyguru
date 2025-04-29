@@ -16,7 +16,7 @@ class ExperimentsEndpoint(BaseLabguruEndpoint):
         element_type: ElementType | None = None,
         name: str | None = None,
     ):
-        return self._get(
+        return self.get(
             sub_route=f'{experiment_id}/elements',
             params={
                 'name': name,

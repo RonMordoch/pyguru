@@ -39,4 +39,4 @@ class StocksEndpoint(BaseLabguruEndpoint):
 
     def get_stocks_by_barcode(self, input: str):
         # TODO: check this works
-        return self._get(sub_route='get_stocks_by_barcode', params={'input': input})
+        return self.get(sub_route='get_stocks_by_barcode', params={'input': input})
