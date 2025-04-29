@@ -42,7 +42,7 @@ class LabguruAdapter(RestAdapter):
         Inject the token into the request.
         """
         if request.requires_token:
-            if method == HTTPMethod.GET:  # Add token to url
+            if method in [HTTPMethod.GET, HTTPMethod.DELETE]:  # Add token to url
                 request.params = {
                     **(request.params or {}),
                     'token': self.get_token()

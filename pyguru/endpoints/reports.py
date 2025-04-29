@@ -15,7 +15,7 @@ class ReportsEndpoint(BaseLabguruEndpoint):
             sub_route='add_section_to_report'
         )
 
-    def add_section(self, resource_id: int, data: str):
+    def add_cover(self, resource_id: int, data: str):
         return self.post(
             json_data={
                 'resource_id': resource_id,
