@@ -23,7 +23,7 @@ class PyGuru:
         self.credentials = Credentials(username, password, host=host, profile_name=profile_name)
         self.adapter = LabguruAdapter(
             credentials=self.credentials,
-            host=host or self.credentials.data.host
+            host=self.credentials.data.host or host
         )
         # Explicitly register endpoints for better IDE support
         self.antibodies = endpoints.AntibodiesEndpoint(self.adapter)
