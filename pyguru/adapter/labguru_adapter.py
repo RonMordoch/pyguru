@@ -22,7 +22,6 @@ class LabguruAdapter(RestAdapter):
         super().__init__(f'{host}/api', version)
         self.credentials = credentials
         self.token = None
-        self.token = self.get_token()
 
     def get_token(self, force: bool = False):
         """
