@@ -34,7 +34,7 @@ class LabguruAdapter(RestAdapter):
             return self.token
         elif self.credentials.token:
             return self.credentials.token
-        return SessionsEndpoint(self).get_token(self.credentials.data.username, self.credentials.data.password)
+        return SessionsEndpoint(self).get_token(self.credentials.username, self.credentials.password, self.credentials.account_id)
 
     def pre_request_hook(self, method: HTTPMethod, request: Request):
         """

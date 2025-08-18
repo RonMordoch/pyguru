@@ -16,9 +16,9 @@ def credentials_tmp_filepath(tmpdir):
 class TestCredentialsFile:
 
     def test_load(self, mock_credentials_file):
-        credentials_data = CredentialsFile.load()
-        assert credentials_data.username == TestCredentials.TEST_UNAME
-        assert credentials_data.password == TestCredentials.TEST_PWD
+        credentials = CredentialsFile.load()
+        assert credentials.username == TestCredentials.TEST_UNAME
+        assert credentials.password == TestCredentials.TEST_PWD
 
     def test_write_new_file(self, credentials_tmp_filepath):
         CredentialsFile.write(

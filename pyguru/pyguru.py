@@ -6,7 +6,7 @@ from pathlib import Path
 from pyguru import endpoints
 from pyguru.adapter import LabguruAdapter
 from pyguru.base_labguru_endpoint import BaseLabguruEndpoint
-from pyguru.credentials.credentials import Credentials, CredentialsFile
+from pyguru.credentials import Credentials, CredentialsFile, load_credentials
 
 
 class PyGuru:
@@ -18,12 +18,13 @@ class PyGuru:
         username: str = None,
         password: str = None,
         profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME,
-        host=LabguruAdapter.HOST
+        host: str = LabguruAdapter.HOST,
+        account_id: int | None = None
     ) -> None:
-        self.credentials = Credentials(username, password, host=host, profile_name=profile_name)
+        self.credentials: Credentials = load_credentials(username, password, host, profile_name, account_id)
         self.adapter = LabguruAdapter(
             credentials=self.credentials,
-            host=self.credentials.data.host or host
+            host=self.credentials.host or host
         )
         # Explicitly register endpoints for better IDE support
         self.antibodies = endpoints.AntibodiesEndpoint(self.adapter)

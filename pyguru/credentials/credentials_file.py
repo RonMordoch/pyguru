@@ -1,7 +1,7 @@
 import configparser
 from pathlib import Path
 
-from .credentials_data import CredentialsData
+from .credentials import Credentials
 
 
 class CredentialsFile:
@@ -21,19 +21,20 @@ class CredentialsFile:
     UNAME_KEY = 'username'
     PWD_KEY = 'password'
     HOST_KEY = 'host'
+    ACCOUNT_KEY = 'account'
 
     @classmethod
-    def load(cls, filepath: Path = None, profile_name: str = None) -> CredentialsData:
+    def load(cls, filepath: Path = None, profile_name: str = None) -> Credentials:
         filepath = filepath or cls.CREDENTIALS_FILEPATH
         profile_name = profile_name or cls.DEFAULT_PROFILE_NAME
         config = configparser.ConfigParser()
         config.read(filepath)
-        return CredentialsData(
+        return Credentials(
             username=config.get(profile_name, cls.UNAME_KEY),
             password=config.get(profile_name, cls.PWD_KEY),
             host=config.get(profile_name, cls.HOST_KEY, fallback=None),
+            account_id=config.get(profile_name, cls.ACCOUNT_KEY, fallback=None),
             profile_name=profile_name
-
         )
 
     @classmethod
@@ -43,6 +44,7 @@ class CredentialsFile:
         password: str,
         host: str | None = None,
         profile_name: str | None = None,
+        account_id: int | None = None,
         filepath: Path = None
     ):
         """
@@ -58,7 +60,8 @@ class CredentialsFile:
         profile_config = {
             cls.UNAME_KEY: username,
             cls.PWD_KEY: password,
-            cls.HOST_KEY: host
+            cls.HOST_KEY: host,
+            cls.ACCOUNT_KEY: account_id
         }
         profile_config = {k: v for k, v in profile_config.items() if v is not None}
         config[profile_name] = profile_config
