@@ -9,6 +9,7 @@ from .companies import CompaniesEndpoint
 from .compounds import CompoundsEndpoint
 from .datasets import DatasetsEndpoint
 from .documents import DocumentsEndpoint
+from .elements import ElementsEndpoints
 from .experiments import ExperimentsEndpoint
 from .flies import FliesEndpoint
 from .folders import FoldersEndpoint
@@ -19,8 +20,8 @@ from .plants import PlantsEndpoint
 from .projects import ProjectsEndpoint
 from .proteins import ProteinsEndpoint
 from .protocols import ProtocolsEndpoint
-from .sections import SectionsEndpoint
 from .reports import ReportsEndpoint
+from .sections import SectionsEndpoint
 from .sequences import SequencesEndpoint
 from .sessions import SessionsEndpoint
 from .shopping_list import ShoppingListEndpoint

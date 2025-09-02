@@ -37,6 +37,7 @@ class PyGuru:
         self.compounds = endpoints.CompoundsEndpoint(self.adapter)
         self.datasets = endpoints.DatasetsEndpoint(self.adapter)
         self.documents = endpoints.DocumentsEndpoint(self.adapter)
+        self.elements = endpoints.ElementsEndpoints(self.adapter)
         self.experiments = endpoints.ExperimentsEndpoint(self.adapter)
         self.flies = endpoints.FliesEndpoint(self.adapter)
         self.folders = endpoints.FoldersEndpoint(self.adapter)
