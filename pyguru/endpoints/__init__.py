@@ -19,6 +19,7 @@ from .plants import PlantsEndpoint
 from .projects import ProjectsEndpoint
 from .proteins import ProteinsEndpoint
 from .protocols import ProtocolsEndpoint
+from .sections import SectionsEndpoint
 from .reports import ReportsEndpoint
 from .sequences import SequencesEndpoint
 from .sessions import SessionsEndpoint

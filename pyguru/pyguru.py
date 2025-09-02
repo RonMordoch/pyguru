@@ -47,6 +47,7 @@ class PyGuru:
         self.projects = endpoints.ProjectsEndpoint(self.adapter)
         self.proteins = endpoints.ProteinsEndpoint(self.adapter)
         self.protocols = endpoints.ProtocolsEndpoint(self.adapter)
+        self.sections = endpoints.SectionsEndpoint(self.adapter)
         self.reports = endpoints.ReportsEndpoint(self.adapter)
         self.sequences = endpoints.SequencesEndpoint(self.adapter)
         self.sessions = endpoints.SessionsEndpoint(self.adapter)
