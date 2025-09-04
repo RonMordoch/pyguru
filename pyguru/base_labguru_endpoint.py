@@ -15,6 +15,7 @@ class BaseLabguruEndpoint:
     def __init__(self, adapter: LabguruAdapter, route: str) -> None:
         self.adapter = adapter
         self.route = route
+        self.plugins: dict[str, function] = {}
 
     def _get_full_endpoint(self,  resource_id: int | None = None, sub_route: str | None = None) -> str:
         route = self.route
@@ -86,3 +87,9 @@ class BaseLabguruEndpoint:
         request = Request(endpoint=self._get_full_endpoint(resource_id=resource_id))
         _, resp_data = self.adapter.delete(request)
         return resp_data
+
+    def register_plugin(self, func: function, name: str | None = None):
+        plugin_name = name or func.__name__
+        bound = func.__get__(self, self.__class__)
+        setattr(self, plugin_name, bound)
+        self.plugins[plugin_name] = bound
