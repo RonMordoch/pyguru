@@ -28,5 +28,5 @@ class TestCredentialsFile:
         )
         config = configparser.ConfigParser()
         config.read(credentials_tmp_filepath)
-        assert config.get(CredentialsFile.DEFAULT_PROFILE_NAME, CredentialsFile.UNAME_KEY) == TestCredentials.TEST_UNAME
-        assert config.get(CredentialsFile.DEFAULT_PROFILE_NAME, CredentialsFile.PWD_KEY) == TestCredentials.TEST_PWD
+        assert config.get(CredentialsFile.DEFAULT_PROFILE, CredentialsFile.UNAME_KEY) == TestCredentials.TEST_UNAME
+        assert config.get(CredentialsFile.DEFAULT_PROFILE, CredentialsFile.PWD_KEY) == TestCredentials.TEST_PWD

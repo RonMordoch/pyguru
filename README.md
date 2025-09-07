@@ -12,7 +12,7 @@ from pyguru.plugins.elements import export_spreadjs_table
 from pyguru.pyguru import PyGuru
 
 element_id = 123
-pyguru = PyGuru(profile_name='test')
+pyguru = PyGuru(profile='test')
 pyguru.elements.register_plugin(export_spreadjs_table)
 pyguru.elements.export_spreadjs_table(element_id)
 ```
@@ -22,6 +22,6 @@ from pyguru.plugins.elements import export_spreadjs_table
 from pyguru.pyguru import PyGuru
 
 element_id = 123
-pyguru = PyGuru(profile_name='test')
+pyguru = PyGuru(profile='test')
 export_spreadjs_table(pyguru.elements, element_id)
 ```

@@ -48,8 +48,12 @@ class BaseLabguruEndpoint:
         sub_route: str | None = None,
         params: dict[str, str] | None = None,
     ) -> Generator[int, ResponseData]:
-        # if page exists in the search parameters, remove it as this iterates over the pages
-        params = params or {}
+        """
+        In order to specify pagination params, add the following in @param `params`:
+        * page: int
+        * page_size: int
+        """
+        params = (params or {})
         while (resp := self.get(sub_route=sub_route, params=params)):
             # If `meta` is included, the response is divided into `meta` containing paging information,
             # and `data` for the actual result

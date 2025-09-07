@@ -13,7 +13,7 @@ class Credentials:
     username: str
     password: str
     host: str | None = None
-    profile_name: str | None = None
+    profile: str | None = None
     account_id: int | None = None
 
     def __post_init__(self):

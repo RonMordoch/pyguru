@@ -15,7 +15,11 @@ from .flies import FliesEndpoint
 from .folders import FoldersEndpoint
 from .fungi import FungiEndpoint
 from .genes import GenesEndpoint
+from .instruments import InstrumentsEndpoint
 from .lipids import LipidsEndpoint
+from .maintenance_events import MaintenanceEventsEndpoint
+from .maintenance_templates import MaintenanceTemplatesEndpoint
+from .maintenance_types import MaintenanceTypesEndpoint
 from .plants import PlantsEndpoint
 from .projects import ProjectsEndpoint
 from .proteins import ProteinsEndpoint

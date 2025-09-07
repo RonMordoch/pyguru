@@ -13,19 +13,25 @@ class PyGuru:
 
     GENERIC_ENDPOINTS = [BaseLabguruEndpoint, endpoints.BiocollectionsEndpoint]
 
+    DEFAULT_HOST = 'my.labguru.com'
+    DEFAULT_VERSION = 'v1'
+
     def __init__(
         self,
         username: str = None,
         password: str = None,
-        profile_name: str = CredentialsFile.DEFAULT_PROFILE_NAME,
-        host: str = LabguruAdapter.HOST,
+        profile: str = CredentialsFile.DEFAULT_PROFILE,
+        host: str = DEFAULT_HOST,
+        version: str = DEFAULT_VERSION,
         account_id: int | None = None
     ) -> None:
-        self.credentials: Credentials = load_credentials(username, password, host, profile_name, account_id)
+        self.credentials: Credentials = load_credentials(username, password, host, profile, account_id)
         self.adapter = LabguruAdapter(
             credentials=self.credentials,
-            host=self.credentials.host or host
+            host=self.credentials.host or host,
+            version=version
         )
+
         # Explicitly register endpoints for better IDE support
         self.antibodies = endpoints.AntibodiesEndpoint(self.adapter)
         self.attachments = endpoints.AttachmentsEndpoint(self.adapter)
@@ -42,8 +48,12 @@ class PyGuru:
         self.flies = endpoints.FliesEndpoint(self.adapter)
         self.folders = endpoints.FoldersEndpoint(self.adapter)
         self.fungi = endpoints.FungiEndpoint(self.adapter)
+        self.instruments = endpoints.InstrumentsEndpoint(self.adapter)
         self.genes = endpoints.GenesEndpoint(self.adapter)
         self.lipids = endpoints.LipidsEndpoint(self.adapter)
+        self.maintenance_events = endpoints.MaintenanceEventsEndpoint(self.adapter)
+        self.maintenance_templates = endpoints.MaintenanceTemplatesEndpoint(self.adapter)
+        self.maintenance_types = endpoints.MaintenanceTypesEndpoint(self.adapter)
         self.plants = endpoints.PlantsEndpoint(self.adapter)
         self.projects = endpoints.ProjectsEndpoint(self.adapter)
         self.proteins = endpoints.ProteinsEndpoint(self.adapter)

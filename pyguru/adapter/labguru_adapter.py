@@ -9,14 +9,11 @@ from .rest_adapter import RestAdapter
 
 class LabguruAdapter(RestAdapter):
 
-    HOST = 'my.labguru.com'
-    VERSION = 'v1'
-
     def __init__(
         self,
         credentials: Credentials,
-        host: str = HOST,
-        version: str = VERSION
+        host: str,
+        version: str
     ) -> None:
         # Append the /api here because its labguru specific
         super().__init__(f'{host}/api', version)
