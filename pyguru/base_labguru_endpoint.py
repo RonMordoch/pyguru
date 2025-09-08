@@ -50,10 +50,14 @@ class BaseLabguruEndpoint:
     ) -> Generator[int, ResponseData]:
         """
         In order to specify pagination params, add the following in @param `params`:
-        * page: int
-        * page_size: int
+        * page: int - defaults to 1
+        * page_size: int - defaults to 100
         """
-        params = (params or {})
+        params = {
+            'page': 1,
+            'page_size': 100,
+            **(params or {})  # override any default value in case params were given
+        }
         while (resp := self.get(sub_route=sub_route, params=params)):
             # If `meta` is included, the response is divided into `meta` containing paging information,
             # and `data` for the actual result
