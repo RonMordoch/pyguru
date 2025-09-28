@@ -27,10 +27,10 @@ class LabguruAdapter(RestAdapter):
         2. Token defined in an environment variable.
         3. Newly fetched token from the API endpoint.
         """
-        if self.token and not force:
-            return self.token
-        elif self.credentials.token:
+        if self.credentials.token:  # Note: this will use the environment variable if existing, before all other methods
             return self.credentials.token
+        elif self.token and not force:
+            return self.token
         return SessionsEndpoint(self).get_token(self.credentials.username, self.credentials.password, self.credentials.account_id)
 
     def pre_request_hook(self, method: HTTPMethod, request: Request):

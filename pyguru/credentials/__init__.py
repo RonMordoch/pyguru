@@ -10,7 +10,7 @@ def load_env_credentials() -> Credentials:
         password=Env.PYGURU_PASSWORD,
         host=Env.PYGURU_HOST,
         profile=Env.PYGURU_PROFILE,
-        account_id=Env.PYGURU_ACCOUNT
+        account_id=Env.PYGURU_ACCOUNT_ID
     )
 
 

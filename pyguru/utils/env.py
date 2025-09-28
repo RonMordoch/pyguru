@@ -14,7 +14,7 @@ class Env:
         return os.environ.get('PYGURU_HOST')
 
     @classproperty
-    def PYGURU_ACCOUNT(self):
+    def PYGURU_ACCOUNT_ID(self):
         return os.environ.get('PYGURU_ACCOUNT')
 
     @classproperty
