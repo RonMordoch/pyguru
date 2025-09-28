@@ -1,3 +1,4 @@
+import json
 from http import HTTPMethod
 
 from pyguru.credentials.credentials import Credentials
@@ -35,8 +36,15 @@ class LabguruAdapter(RestAdapter):
 
     def pre_request_hook(self, method: HTTPMethod, request: Request):
         """
-        Inject the token into the request.
+        Inject the token into the request and format params if needed for GET requests.
         """
+        # LabGuru API expects nested dictionaries in search params to be serialized
+        if request.params:
+            for k, v in request.params.items():
+                if isinstance(v, dict):
+                    # Compact json - omit the '+' values for spaces, otherwise API breaks
+                    request.params[k] = json.dumps(v, separators=(',', ':'))
+
         if request.requires_token:
             if method in [HTTPMethod.GET, HTTPMethod.DELETE]:  # Add token to url
                 request.params = {

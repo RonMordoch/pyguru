@@ -7,9 +7,6 @@ class ExperimentsEndpoint(BaseLabguruEndpoint):
     def __init__(self, adapter) -> None:
         super().__init__(adapter, 'experiments')
 
-    def get(self):
-        raise Exception('not supported')  # TODO custom exception
-
     def get_experiment_elements(
         self,
         experiment_id: int,
