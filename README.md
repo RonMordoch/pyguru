@@ -47,7 +47,7 @@ Please note that using a config file means your credentials are stored in plaint
 
 ## Endpoints
 Currently not all endpoints are implemented, but they will be.
-All implemented endpoints are registers undered the `PyGuru` object.
+All implemented endpoints are registered under the `PyGuru` object.
 
 You can create your own endpoint class and register by extending the base endpoint class:
 ```python
