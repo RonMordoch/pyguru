@@ -2,6 +2,7 @@ import importlib
 import inspect
 import pkgutil
 from pathlib import Path
+from typing import Callable
 
 from pyguru import endpoints
 from pyguru.adapter import LabguruAdapter
@@ -96,7 +97,7 @@ class PyGuru:
         for module_info in pkgutil.iter_modules([endpoints_path]):
             self.register_endpoint(module_info)
 
-    def register_plugin(self, func: function, name: str | None = None):
+    def register_plugin(self, func: Callable, name: str | None = None):
         plugin_name = name or func.__name__
         bound = func.__get__(self, self.__class__)
         setattr(self, plugin_name, bound)
