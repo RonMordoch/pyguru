@@ -31,6 +31,7 @@ class PyGuru:
             host=self.credentials.host or host,
             version=version
         )
+        self.plugins: dict[str, function] = {}
 
         # Explicitly register endpoints for better IDE support
         self.antibodies = endpoints.AntibodiesEndpoint(self.adapter)
@@ -94,3 +95,9 @@ class PyGuru:
     def register_endpoints(self, endpoints_path: str):
         for module_info in pkgutil.iter_modules([endpoints_path]):
             self.register_endpoint(module_info)
+
+    def register_plugin(self, func: function, name: str | None = None):
+        plugin_name = name or func.__name__
+        bound = func.__get__(self, self.__class__)
+        setattr(self, plugin_name, bound)
+        self.plugins[plugin_name] = bound

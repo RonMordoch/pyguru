@@ -81,24 +81,24 @@ dragons = pyguru.dragons_bank.get()
 
 ## Plugins
 PyGuru offers a way to write your own plugins for commonly used methods involving the API which are not neccessarily officially supported by the API.
-Each endpoint allows you to register a plugin function so it can be called directly from the endpoint, for example:
+You can bind these plugins directly to a PyGuru instance, enabling you to use multiple API endpoints implemented in PyGuru along with your own custom registered endpoints to create reusable workflows or a chain of operations not supported by an official API route.
 ```python
 from pyguru.plugins.elements import export_spreadjs_table
 from pyguru.pyguru import PyGuru
 
 element_id = 123
 pyguru = PyGuru(profile='test')
-pyguru.elements.register_plugin(export_spreadjs_table)
-pyguru.elements.export_spreadjs_table(element_id)
+pyguru.register_plugin(export_spreadjs_table)
+pyguru.export_spreadjs_table(element_id)
 ```
-In this example, the endpoint is required to be the first parameter of the plugin function so that the method binding will work. If you write your plugin this way, you can still call it without binding, e.g.:
+In this example, the pyguru instance is required to be the first parameter of the plugin function so that the method binding will work. If you write your plugin this way, you can still call it without binding, e.g.:
 ```python
 from pyguru.plugins.elements import export_spreadjs_table
 from pyguru.pyguru import PyGuru
 
 element_id = 123
 pyguru = PyGuru(profile='test')
-export_spreadjs_table(pyguru.elements, element_id)
+export_spreadjs_table(pyguru, element_id)
 ```
 
 ## Disclaimer

@@ -1,10 +1,10 @@
 import json
 
-from pyguru.endpoints.elements import ElementsEndpoints
+from pyguru import PyGuru
 
 
-def export_spreadjs_table(endpoint: ElementsEndpoints,  resource_id: dict) -> list[dict]:
-    element = endpoint.get_by_id(resource_id)
+def export_spreadjs_table(pyguru: PyGuru,  resource_id: dict) -> list[dict]:
+    element = pyguru.elements.get_by_id(resource_id)
     data = json.loads(element['data'])
     spread = json.loads(data['spread'])
     sheets = []
