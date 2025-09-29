@@ -20,6 +20,7 @@ from .lipids import LipidsEndpoint
 from .maintenance_events import MaintenanceEventsEndpoint
 from .maintenance_templates import MaintenanceTemplatesEndpoint
 from .maintenance_types import MaintenanceTypesEndpoint
+from .members import MembersEndpoint
 from .plants import PlantsEndpoint
 from .projects import ProjectsEndpoint
 from .proteins import ProteinsEndpoint
