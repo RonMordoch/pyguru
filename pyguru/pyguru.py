@@ -1,13 +1,18 @@
 import importlib
 import inspect
 import pkgutil
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
+from typing import Any, Concatenate, ParamSpec
 
 from pyguru import endpoints
 from pyguru.adapter import LabguruAdapter
 from pyguru.base_labguru_endpoint import BaseLabguruEndpoint
 from pyguru.credentials import Credentials, CredentialsFile, load_credentials
+
+P = ParamSpec('P')  # all the remaining args
+# https://peps.python.org/pep-0612/
+PluginFunc = Callable[Concatenate['PyGuru', P], Any]
 
 
 class PyGuru:
@@ -97,7 +102,7 @@ class PyGuru:
         for module_info in pkgutil.iter_modules([endpoints_path]):
             self.register_endpoint(module_info)
 
-    def register_plugin(self, func: Callable, name: str | None = None):
+    def register_plugin(self, func: PluginFunc, name: str | None = None):
         plugin_name = name or func.__name__
         bound = func.__get__(self, self.__class__)
         setattr(self, plugin_name, bound)
